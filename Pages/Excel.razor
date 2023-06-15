@@ -1,0 +1,18 @@
+@page "/excel"
+@layout EmptyLayout
+
+<form class="py-5 text-center bg-white" action="">
+    <InputFile OnChange="@LoadFiles" />
+    <button class="btn"></button>
+</form>
+@code {
+    public async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        await Task.Run(() =>
+        {
+            TakeExcel.ReadExcel(e.File.OpenReadStream());
+        });
+
+
+    }
+}
