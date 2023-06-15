@@ -1,0 +1,17 @@
+.b-card-rad {
+    border-radius: 8px;
+}
+
+.transparent-font {
+    font-size: 12px;
+    font-weight: 200;
+    opacity: 0.8;
+    color: rgb(96, 125, 139);
+
+}
+
+.card-span-font {
+    font-size: 12px;
+    font-style: italic;
+    color: black;
+}

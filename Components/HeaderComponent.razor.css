@@ -1,0 +1,37 @@
+.header-text {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    padding: .5rem !important;
+}
+
+.b-tr-rad {
+    border-top-right-radius: 20px;
+}
+
+.b-rad {
+    border-radius: 20px;
+}
+
+.border-rad-right {
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+}
+
+.border-rad-left {
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.custom-icon {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+
+
+.form-control:focus,
+.btn:focus {
+
+    box-shadow: none !important;
+
+}

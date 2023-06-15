@@ -1,0 +1,7 @@
+.background-blur {
+    background: rgba(255, 255, 255, 0.78) !important;
+    border-bottom-right-radius: 16px !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(10.9px) !important;
+    -webkit-backdrop-filter: blur(10.9px) !important;
+}

@@ -1,0 +1,89 @@
+.minified.navbarY {
+    width: 140px;
+}
+
+.transparent-font {
+    font-size: 12px;
+    font-weight: 200;
+    opacity: 0.8;
+    color: rgb(96, 125, 139);
+
+}
+
+.minified .new-task {
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* Font */
+.fsw {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+
+}
+
+.fsws {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+
+.fss {
+    font-size: 12px !important;
+}
+
+.fsm {
+    font-size: 13px !important;
+}
+
+/* FontEnd */
+/* border */
+.b-rad {
+    border: 1px solid #F3F4F6 !important;
+    border-radius: 30px !important;
+}
+
+.b-rad2 {
+    border: 1px solid #F3F4F6 !important;
+    border-top-left-radius: 20px !important;
+    border-top-right-radius: 20px !important;
+}
+
+.b-rad3 {
+    border: 1px solid #F3F4F6 !important;
+    border-radius: 20px !important;
+}
+
+.b-rad4 {
+    border: 1px solid transparent !important;
+    border-radius: 10px !important;
+}
+
+.b-rad5 {
+    border-radius: 10px !important;
+}
+
+/* borderEnd */
+.user-image {
+    width: 5px !important;
+    height: 5px !important;
+}
+
+.card-header {
+    background-color: white;
+}
+
+.list-group-item {
+    border: none !important;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0 !important;
+}
+
+.background-blur {
+    background: rgba(255, 255, 255, 0.78);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10.9px);
+    -webkit-backdrop-filter: blur(10.9px);
+}

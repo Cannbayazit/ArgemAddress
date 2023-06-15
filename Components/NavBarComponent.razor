@@ -1,0 +1,124 @@
+<nav class="row g-0  @(Minified? "minified" : "")">
+    <div class="col py-3 px-3 background-blur">
+        <div class="nav-header position-relative">
+            <div class="row g-0">
+                @if (Minified)
+                {
+                    <div class="col-12">
+                        <RadzenImage Path="Images/user.jpg"
+                            class="img-fluid user-image border border-5 border-light rounded-circle">
+                        </RadzenImage>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-4">
+                        <RadzenImage Path="Images/user.jpg"
+                            class="img-fluid user-image border border-5 border-light rounded-circle">
+                        </RadzenImage>
+                    </div>
+                    <div class="col-8 p-2">
+                        <RadzenText class="d-block fsw mb-0" TextStyle="TextStyle.Caption">Good Day &#9995;</RadzenText>
+                        <p class="fsw mb-0">Vitaliy D.</p>
+                    </div>
+                }
+            </div>
+            <button @onclick="MinifiedEventAsync" class="btn p-0 position-absolute border-none"
+                style="right:-20px; top:80px;box-shadow: none;">
+                <RadzenIcon Icon="@(Minified? "arrow_forward_ios" : "arrow_back_ios")"></RadzenIcon>
+            </button>
+        </div>
+        <hr style="color: gray;">
+        <div class="menu">
+            <p class="fss m-0">Menu:6</p>
+            <ul class="list-group list-group-flush">
+                @for (int i = 0; i < 5; i++)
+                {
+                    <li class="list-group-item m-0 bg-transparent">
+                        <div class="card p-0 b-rad4 bg-transparent">
+                            <div class="px-3 py-2">
+                                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+                                    JustifyContent="@(Minified? JustifyContent.Center : JustifyContent.Normal)">
+                                    <RadzenIcon style="color: rgb(124, 68, 255);" Icon="folder"></RadzenIcon>
+                                    @if (!Minified)
+                                    {
+                                        <span class="d-inline-block fsm transparent-font">My Project Task</span>
+                                    }
+                                </RadzenStack>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <hr style="color: gray;">
+        <div class="Citys">
+            <p class="fss mt-1 mb-0">Services:3</p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item b-rad3">
+                    <div class="card  b-rad3">
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            <div class="px-3 py-2 d-flex align-items-center">
+                                <img style="height: 24px;" src="images/blazor.png" alt="">
+                                @if (!Minified)
+                                {
+                                    <span class="mx-3 fsws">Blazorwasm</span>
+                                }
+                            </div>
+                        }
+                        <div class="d-flex align-items-center px-3 py-2">
+                            <RadzenButton Icon="add" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small"
+                                class="rz-border-radius-10 " />
+                            @if (!Minified)
+                            {
+                                <span class="mx-3 fsws">Add a new plugin</span>
+                            }
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="settings">
+            <p class="fss mt-1 mb-0">Settings:6</p>
+            <div class="card b-rad5 p-3 mb-2">
+                <RadzenStack style="color:rgb(96, 125, 139);"
+                    Orientation="@(Minified? Orientation.Vertical : Orientation.Horizontal)"
+                    JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Center">
+                    <RadzenIcon Icon="description"></RadzenIcon>
+                    <RadzenIcon Icon="tune"></RadzenIcon>
+                    <span class="position-relative d-flex align-items-center">
+                        <RadzenIcon Icon="person"></RadzenIcon>
+                        <span style="font-size:8px;"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            6
+                        </span>
+                    </span>
+                    <RadzenIcon Icon="incomplete_circle"></RadzenIcon>
+                    <RadzenIcon Icon="settings"></RadzenIcon>
+                    <RadzenIcon Icon="lightbulb_outline"></RadzenIcon>
+                </RadzenStack>
+            </div>
+            <div class="card b-rad5 p-3 new-task">
+                <RadzenStack AlignItems="AlignItems.Center">
+                    <RadzenButton style="background-color: rgb(124, 68, 255);" Icon="add" ButtonStyle="ButtonStyle.Info" Size="ButtonSize.Large"
+                        class="rz-border-radius-10 " />
+                    @if (!Minified)
+                    {
+                        <RadzenText>Create New Task</RadzenText>
+                    }
+                </RadzenStack>
+            </div>
+        </div>
+    </div>
+</nav>
+@code {
+    [Parameter]
+    public EventCallback<bool> minified { get; set; }
+    public bool Minified { get; set; }
+    public async Task MinifiedEventAsync()
+    {
+        Minified = !Minified;
+        await minified.InvokeAsync(Minified);
+    }
+}
