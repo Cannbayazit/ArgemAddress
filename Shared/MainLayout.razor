@@ -11,17 +11,16 @@
         padding-top: 120px;
     }
 </style>
-<div class="container py-5">
-    <div class="row g-0">
-        <div class="@(Minimize? "col-1" : "col-3")">
-            <NavBarComponent minified="MinifiedEvent"></NavBarComponent>
-        </div>
-        <div class="@(Minimize? "col-11" : "col-9") position-relative">
-            <HeaderComponent></HeaderComponent>
-            <main class="w-100 h-100 p-20">
-                @Body
-            </main>
-        </div>
+<div class="row g-0 h-100">
+    <div class="@(Minimize? "w-05" : "w-15")">
+        <NavBarComponent minified="MinifiedEvent"></NavBarComponent>
+    </div>
+    <div class="@(Minimize? "w-95" : "w-85") position-relative">
+        <HeaderComponent></HeaderComponent>
+        <main class="w-100 h-100 p-20">
+            @Body
+            <FooterComponent></FooterComponent>
+        </main>
     </div>
 </div>
 

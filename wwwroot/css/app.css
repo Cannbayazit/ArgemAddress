@@ -1,13 +1,27 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@600;700&display=swap');
 
+* {
+    box-shadow: none !important;
+}
+
 html,
 body {
     padding: 0;
+    height: 100vh;
     overflow-x: hidden;
     box-sizing: border-box;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-image: url(https://fastly.picsum.photos/id/867/1920/1080.jpg?hmac=scuraOmbxVQl8pdFZhxW_hT28oQ7rnbn7QQbVtfeNeo);
+    /* background-image: url(https://fastly.picsum.photos/id/867/1920/1080.jpg?hmac=scuraOmbxVQl8pdFZhxW_hT28oQ7rnbn7QQbVtfeNeo); */
+    background: #F3F4F6 !important;
+}
+
+.h-85 {
+    height: 85vh;
+}
+
+.h-96 {
+    height: 96vh;
 }
 
 header {
@@ -43,7 +57,7 @@ a,
 }
 
 .btn-primary {
-    color: #fff;
+    color: #ffffffe7;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }

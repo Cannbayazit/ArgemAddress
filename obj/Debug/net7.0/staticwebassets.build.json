@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "fMcNyHFtjSdZAXy4OI9nrVUYsQTYbkjsOUA7SbVpL6U=",
+  "Hash": "+W1M/A3AztvvGmq0bt0GmgV3K2VwbbXzdvr7CzJVb98=",
   "Source": "ArgemAddress",
   "BasePath": "/",
   "Mode": "Root",
@@ -1273,6 +1273,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Can\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\7.0.5\\runtimes\\browser-wasm\\lib\\net7.0\\netstandard.dll"
+    },
+    {
+      "Identity": "C:\\Users\\Can\\Desktop\\ArgemAddress\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "SourceId": "ArgemAddress",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\Can\\Desktop\\ArgemAddress\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "BlazorWebAssemblyResource",
+      "AssetTraitValue": "runtime",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Can\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net6.0\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "C:\\Users\\Can\\Desktop\\ArgemAddress\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Radzen.Blazor.dll",
@@ -6713,6 +6730,23 @@
       "CopyToOutputDirectory": "PreserveNewest",
       "CopyToPublishDirectory": "Never",
       "OriginalItemSpec": "C:\\Users\\Can\\Desktop\\ArgemAddress\\bin\\Debug\\net7.0\\wwwroot\\_framework\\System.IO.Compression.FileSystem.dll"
+    },
+    {
+      "Identity": "C:\\Users\\Can\\Desktop\\ArgemAddress\\obj\\Debug\\net7.0\\build-gz\\RIyTloYB.gz",
+      "SourceId": "ArgemAddress",
+      "SourceType": "Computed",
+      "ContentRoot": "C:\\Users\\Can\\Desktop\\ArgemAddress\\bin\\Debug\\net7.0\\wwwroot\\",
+      "BasePath": "/",
+      "RelativePath": "_framework/Newtonsoft.Json.dll.gz",
+      "AssetKind": "Build",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "RelatedAsset": "C:\\Users\\Can\\Desktop\\ArgemAddress\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Newtonsoft.Json.dll",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "CopyToOutputDirectory": "PreserveNewest",
+      "CopyToPublishDirectory": "Never",
+      "OriginalItemSpec": "C:\\Users\\Can\\Desktop\\ArgemAddress\\bin\\Debug\\net7.0\\wwwroot\\_framework\\Newtonsoft.Json.dll"
     },
     {
       "Identity": "C:\\Users\\Can\\Desktop\\ArgemAddress\\obj\\Debug\\net7.0\\build-gz\\rqcWLO8i.gz",

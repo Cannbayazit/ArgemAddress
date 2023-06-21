@@ -1,7 +1,7 @@
-<nav class="row g-0  @(Minified? "minified" : "")">
+<nav class="row g-0 h-100  @(Minified? "minified" : "")">
     <div class="col py-3 px-3 background-blur">
         <div class="nav-header position-relative">
-            <div class="row g-0">
+            <div class="row g-0 ">
                 @if (Minified)
                 {
                     <div class="col-12">
@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-8 p-2">
                         <RadzenText class="d-block fsw mb-0" TextStyle="TextStyle.Caption">Good Day &#9995;</RadzenText>
-                        <p class="fsw mb-0">Vitaliy D.</p>
+                        <p class="fsw mb-0">Doğan Can Bayazıt</p>
                     </div>
                 }
             </div>
@@ -30,25 +30,37 @@
         </div>
         <hr style="color: gray;">
         <div class="menu">
-            <p class="fss m-0">Menu:6</p>
+            <p class="fss m-0">Menu:4</p>
             <ul class="list-group list-group-flush">
-                @for (int i = 0; i < 5; i++)
-                {
                     <li class="list-group-item m-0 bg-transparent">
                         <div class="card p-0 b-rad4 bg-transparent">
-                            <div class="px-3 py-2">
-                                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center"
+                            <div class="">
+                                <RadzenStack Orientation="Orientation.Vertical" AlignItems="AlignItems.Normal"
                                     JustifyContent="@(Minified? JustifyContent.Center : JustifyContent.Normal)">
-                                    <RadzenIcon style="color: rgb(124, 68, 255);" Icon="folder"></RadzenIcon>
                                     @if (!Minified)
                                     {
-                                        <span class="d-inline-block fsm transparent-font">My Project Task</span>
+                                    <div class="nav-item ">
+                                    <NavLink style="font-size: 14px; font-weight: normal;" class="nav-link text-decoration-none text-dark" href="city" Match="NavLinkMatch.All">
+                                    Şehir
+                                    </NavLink>
+                                    <NavLink style="font-size: 14px; font-weight: normal;" class="nav-link text-decoration-none text-dark" href="district" Match="NavLinkMatch.All">
+                                    İlçe
+                                    </NavLink>
+                                    <NavLink style="font-size: 14px; font-weight: normal;" class="nav-link text-decoration-none text-dark" href="neighbour" Match="NavLinkMatch.All">
+                                    Mahalle
+                                    </NavLink>
+                                    <NavLink style="font-size: 14px; font-weight: normal;" class="nav-link text-decoration-none text-dark" href="street" Match="NavLinkMatch.All">
+                                    Cadde Sokak
+                                    </NavLink>
+                                    <NavLink style="font-size: 14px; font-weight: normal;" class="nav-link text-decoration-none text-dark" href="apartment" Match="NavLinkMatch.All">
+                                    Apartman
+                                    </NavLink>
+                                    </div>
                                     }
                                 </RadzenStack>
                             </div>
                         </div>
                     </li>
-                }
             </ul>
         </div>
         <hr style="color: gray;">

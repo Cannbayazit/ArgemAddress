@@ -1,0 +1,77 @@
+@page "/street"
+@layout MainLayout
+
+<div class="row px-5 py-2">
+    <div class="col-2 h-96 mt-2  background-blur b-rad-for-col border-for-inputs">
+        <div class="col-12 ">
+            <div class="navbar ">
+                <RadzenDropDown @bind-value=SelectedCity Change="@OnChange" AllowVirtualization="true" Data="cities"
+                    TextProperty="Name" ValueProperty="Id" Placeholder="İl Seçiniz" TValue="int?"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
+                    Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
+            </div>
+            <div class="navbar ">
+                <RadzenDropDown @bind-value=SelectedDistrict Disabled="!districts.Any()" Data="districts"
+                    TextProperty="Name" ValueProperty="Id" Placeholder="İlçe Seçiniz" TValue="int?"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
+                    Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
+            </div>
+            <div class="navbar ">
+                <RadzenDropDown @bind-value=SelectedDistrict Disabled="!districts.Any()" Data="districts"
+                    TextProperty="Name" ValueProperty="Id" Placeholder="Mahalle Seçiniz" TValue="int?"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
+                    Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <button @onclick="GetFilteredItems" class="btn btn-border my-4 ">Listele</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-10 mt-2">
+        <div class="col-12 b-rad-for-col background-blur p-3 h-10 border-for-inputs">
+
+        </div>
+        <div class="col-12 mt-2 b-rad-for-col background-blur p-3 h-85 border-for-inputs">
+            <div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    List<Neighbourhoods> neighbourhoods = new List<Neighbourhoods>();
+    int? SelectedCity;
+    int? SelectedDistrict;
+    List<Cities> cities = Cities.CityList;
+    List<Districts> districts = new List<Districts>();
+    public string searchTextStatus;
+    void searchTextChanged(string text)
+    {
+        searchTextStatus = $"Search text: {text}";
+
+
+        StateHasChanged();
+    }
+    public void OnChange(object cityId)
+    {
+        if (cityId is not null)
+        {
+            districts = Districts.DistrictList.Where(p => p.IlId == (int)cityId).ToList();
+            return;
+        }
+        districts = new List<Districts>();
+    }
+
+    public void GetFilteredItems()
+    {
+        if (SelectedCity is not null && SelectedDistrict is not null)
+        {
+            neighbourhoods = Neighbourhoods.NeighbourhoodsList.Where(p => p.IlId == SelectedCity && p.IlceId ==
+            SelectedDistrict).ToList();
+        }
+    }
+}

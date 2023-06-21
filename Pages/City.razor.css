@@ -1,0 +1,58 @@
+.row {
+    height: 100vh;
+}
+
+.navbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    padding-top: 1.5rem !important;
+    padding-left: 1rem !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+}
+
+.btn-border {
+    border: 1px solid rgba(255, 255, 255, 0.78) !important;
+    background-color: rgb(124, 68, 255);
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.btn:active:focus {
+    box-shadow: none;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
+
+.b-rad-for-label {
+    border: none !important;
+    border-radius: 8px;
+}
+
+.b-rad-for-button {
+    border-radius: 5px !important;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.b-rad-for-col {
+    border-radius: 15px;
+}
+
+.border-for-inputs {
+    border: 1px solid rgb(230, 228, 228) !important;
+}
+
+
+
+.background-blur {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.78) !important;
+    backdrop-filter: blur(10.9px) !important;
+    -webkit-backdrop-filter: blur(10.9px) !important;
+}

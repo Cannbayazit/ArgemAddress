@@ -1,18 +1,47 @@
 @page "/excel"
 @layout EmptyLayout
-
-<form class="py-5 text-center bg-white" action="">
-    <InputFile OnChange="@LoadFiles" />
-    <button class="btn"></button>
-</form>
-@code {
-    public async Task LoadFiles(InputFileChangeEventArgs e)
-    {
-        await Task.Run(() =>
+@inject IJSRuntime JsRunTime
+<table>
+    <tbody>
+        @foreach (var item in ClipBoardDataList)
         {
-            TakeExcel.ReadExcel(e.File.OpenReadStream());
-        });
-
-
+            <tr>
+                @foreach (var s in item.Split('\t'))
+                {
+                    <td>
+                        @s
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+@code {
+    public List<string> ClipBoardDataList = new List<string>();
+    public string ClipBoardData { get; set; }
+    protected async override Task OnInitializedAsync()
+    {
+        await Task.Delay(3000);
+        ClipBoardData = new(await JsRunTime.InvokeAsync<string>("window.navigator.clipboard.readText"));
+        GenerateClipBoardDataItems();
+    }
+    public void GenerateClipBoardDataItems()
+    {
+        var rows = ClipBoardData.Split('\n');
+        foreach (var row in rows)
+        {
+            ClipBoardDataList.Add(row);
+            // Satırı sekme karakteriyle sütunlara ayır
+            var columns = row.Split('\t');
+            foreach (var column in columns)
+            {
+                // Sütun değerlerini istediğiniz şekilde kullanabilirsiniz
+                Console.WriteLine(column);
+            }
+        }
     }
 }
+
+
+
+
