@@ -39,3 +39,8 @@
 .link-color {
     color: rgb(124, 68, 255);
 }
+
+.btn-color {
+    color: white;
+    background-color: rgb(124, 68, 255);
+}

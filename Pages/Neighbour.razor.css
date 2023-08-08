@@ -1,6 +1,4 @@
-.row {
-    height: 100vh;
-}
+.row {}
 
 .navbar {
     display: flex !important;

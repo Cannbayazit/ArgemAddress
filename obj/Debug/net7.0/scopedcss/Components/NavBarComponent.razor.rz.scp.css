@@ -10,6 +10,15 @@
 
 }
 
+.link-color[b-q8ckkymgtg] {
+    color: rgb(124, 68, 255);
+}
+
+.btn-color[b-q8ckkymgtg] {
+    color: white;
+    background-color: rgb(124, 68, 255);
+}
+
 .minified .new-task[b-q8ckkymgtg] {
     background-color: transparent !important;
     border: none !important;

@@ -853,9 +853,9 @@ C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\build-gz\WQvmaIuV.gz
 C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\scopedcss\Pages\City.razor.rz.scp.css
 C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\scopedcss\Pages\Neighbour.razor.rz.scp.css
 C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\scopedcss\Pages\District.razor.rz.scp.css
-C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\scopedcss\Pages\Avenue_Street.razor.rz.scp.css
 C:\Users\Can\Desktop\ArgemAddress\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll
 C:\Users\Can\Desktop\ArgemAddress\bin\Debug\net7.0\wwwroot\_framework\Newtonsoft.Json.dll.gz
 C:\Users\Can\Desktop\ArgemAddress\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\build-gz\RIyTloYB.gz
 C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\scopedcss\Pages\Apartment.razor.rz.scp.css
+C:\Users\Can\Desktop\ArgemAddress\obj\Debug\net7.0\scopedcss\Pages\AvenueStreet.razor.rz.scp.css

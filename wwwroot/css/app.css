@@ -10,6 +10,7 @@ body {
     padding: 0;
     height: 100vh;
     overflow-x: hidden;
+    /* overflow-y: hidden; */
     box-sizing: border-box;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     /* background-image: url(https://fastly.picsum.photos/id/867/1920/1080.jpg?hmac=scuraOmbxVQl8pdFZhxW_hT28oQ7rnbn7QQbVtfeNeo); */
@@ -30,7 +31,7 @@ header {
 
 iframe {
     width: 98%;
-    height: 75vh;
+    height: 78vh;
 }
 
 header,

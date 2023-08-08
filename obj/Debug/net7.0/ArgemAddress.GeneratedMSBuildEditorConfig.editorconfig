@@ -9,81 +9,81 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = browser
 build_property.RootNamespace = ArgemAddress
 build_property.RootNamespace = ArgemAddress
-build_property.ProjectDir = C:\Users\Can\Desktop\ArgemAddress\
+build_property.ProjectDir = c:\Users\Can\Desktop\ArgemAddress\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Can\Desktop\ArgemAddress
+build_property.MSBuildProjectDirectory = c:\Users\Can\Desktop\ArgemAddress
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Can/Desktop/ArgemAddress/App.razor]
+[c:/Users/Can/Desktop/ArgemAddress/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/Excel.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Pages/Excel.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXhjZWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/Home.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/Map.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Pages/Map.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Can/Desktop/ArgemAddress/Shared/EmptyLayout.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Shared/EmptyLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEVtcHR5TGF5b3V0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Can/Desktop/ArgemAddress/Shared/SurveyPrompt.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Can/Desktop/ArgemAddress/_Imports.razor]
+[c:/Users/Can/Desktop/ArgemAddress/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Can/Desktop/ArgemAddress/Components/CardComponent.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Components/CardComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDYXJkQ29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-1mu0o0kpg3
 
-[C:/Users/Can/Desktop/ArgemAddress/Components/FooterComponent.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Components/FooterComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xGb290ZXJDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-ipvbsr20x5
 
-[C:/Users/Can/Desktop/ArgemAddress/Components/HeaderComponent.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Components/HeaderComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xIZWFkZXJDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-7ohc31xzm0
 
-[C:/Users/Can/Desktop/ArgemAddress/Components/NavBarComponent.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Components/NavBarComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xOYXZCYXJDb21wb25lbnQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-q8ckkymgtg
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/Apartment.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Pages/Apartment.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXBhcnRtZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-1vb32peqsy
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/Avenue_Street.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXZlbnVlX1N0cmVldC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = b-i1ntlnw06h
+[c:/Users/Can/Desktop/ArgemAddress/Pages/AvenueStreet.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXZlbnVlU3RyZWV0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-bjfqxrwt9x
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/City.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Pages/City.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2l0eS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-10tbxtmbno
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/District.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Pages/District.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlzdHJpY3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-yy4qvvwy0l
 
-[C:/Users/Can/Desktop/ArgemAddress/Pages/Neighbour.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Pages/Neighbour.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmVpZ2hib3VyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = b-5jyv09mua8
 
-[C:/Users/Can/Desktop/ArgemAddress/Shared/MainLayout.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-jpkzpcrf50
 
-[C:/Users/Can/Desktop/ArgemAddress/Shared/NavMenu.razor]
+[c:/Users/Can/Desktop/ArgemAddress/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-2pcuwqbui2

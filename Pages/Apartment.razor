@@ -1,32 +1,31 @@
 @page "/apartment"
 @layout MainLayout
-
 <div class="row px-5 py-2">
     <div class="col-2 h-96 mt-2  background-blur b-rad-for-col border-for-inputs">
         <div class="col-12 ">
             <div class="navbar ">
-                <RadzenDropDown @bind-value=SelectedCity Change="@OnChange" AllowVirtualization="true" Data="cities"
+                <RadzenDropDown @bind-value=SelectedCity Change="@OnCityChange" AllowVirtualization="true" Data="cities"
                     TextProperty="Name" ValueProperty="Id" Placeholder="İl Seçiniz" TValue="int?"
                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                     FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
                     Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
             </div>
             <div class="navbar ">
-                <RadzenDropDown @bind-value=SelectedDistrict Disabled="!districts.Any()" Data="districts"
+                <RadzenDropDown @bind-value=SelectedDistrict Change="@OnDistrictChange" Disabled="!districts.Any()" Data="districts"
                     TextProperty="Name" ValueProperty="Id" Placeholder="İlçe Seçiniz" TValue="int?"
                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                     FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
                     Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
             </div>
             <div class="navbar ">
-                <RadzenDropDown @bind-value=SelectedDistrict Disabled="!districts.Any()" Data="districts"
+                <RadzenDropDown @bind-value=SelectedNeighbour Change="@OnNeighbourChange" Disabled="!neighbourhoods.Any()" Data="neighbourhoods"
                     TextProperty="Name" ValueProperty="Id" Placeholder="Mahalle Seçiniz" TValue="int?"
                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                     FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
                     Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
             </div>
             <div class="navbar ">
-                <RadzenDropDown @bind-value=SelectedDistrict Disabled="!districts.Any()" Data="districts"
+                <RadzenDropDown @bind-value=SelectedStreet Change="@OnChange" Disabled="!streetList.Any()" Data="streetList"
                     TextProperty="Name" ValueProperty="Id" Placeholder="Cadde/Sokak Seçiniz" TValue="int?"
                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                     FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
@@ -39,31 +38,84 @@
     </div>
     <div class="col-10 mt-2">
         <div class="col-12 b-rad-for-col background-blur p-3 h-10 border-for-inputs">
-
+             <form >
+                    <label class="d-flex justify-content-center mb-3">Yeni Kayıt Ekleme Alanı</label>
+                    <input @bind-value="name" class=" w-75 b-rad-for-label bg-light border-for-inputs" type="text">
+                    <button type="button" @onclick="SaveApartment" class="btn btn-success">
+                       Ekle
+                    </button>
+                </form>
         </div>
         <div class="col-12 mt-2 b-rad-for-col background-blur p-3 h-85 border-for-inputs">
             <div>
-
+                <RadzenDataGrid @ref="itemsGrid" AllowAlternatingRows="false" AllowPaging="true" PageSize="5"
+                        AllowSorting="true" EditMode="DataGridEditMode.Single" Data="@apartmentsList"
+                        TItem="Models.Apartment" RowUpdate="@OnUpdateRow" ColumnWidth="200px">
+                        <EmptyTemplate>
+                            <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">Gösterilecek
+                                öğe bulunamadı</p>
+                        </EmptyTemplate>
+                        <Columns>
+                            <RadzenDataGridColumn TItem="Models.Apartment" Property="Name" Title="APartman Adı"
+                                Width="200px">
+                                <EditTemplate Context="apartment">
+                                    <RadzenTextBox @bind-Value="apartment.Name" Style="width:100%; display: block" Name="Apartman Adı" />
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn Context="apartment" TItem="Models.Apartment" Filterable="false" Sortable="false"
+                                TextAlign="TextAlign.Right" Width="156px">
+                                <Template>
+                                    <RadzenButton Click="@(args => EditRow(apartment))" Icon="edit"
+                                        ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(apartment))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </Template>
+                                <EditTemplate Context="apartment">
+                                    <RadzenButton  Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Click="@((args) => SaveRow(apartment))"
+                                        Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton Icon="close" Click="@((args) => CancelEdit(apartment))" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat"
+                                        Size="ButtonSize.Medium" class="my-1 ms-1">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(apartment))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                        </Columns>
+                    </RadzenDataGrid>
             </div>
         </div>
     </div>
 </div>
-
 @code {
+    string name;
+    Models.Apartment itemToInsert;
+    Models.Apartment itemToUpdate;
+    RadzenDataGrid<Models.Apartment> itemsGrid;
+    List<Models.Apartment> apartmentsList = new List<Models.Apartment>();
     List<Neighbourhoods> neighbourhoods = new List<Neighbourhoods>();
+    List<Models.AvenueStreet> streetList = new List<Models.AvenueStreet>();
     int? SelectedCity;
     int? SelectedDistrict;
+    int? SelectedNeighbour;
+    int? SelectedStreet;
     List<Cities> cities = Cities.CityList;
     List<Districts> districts = new List<Districts>();
     public string searchTextStatus;
     void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";
-
-
         StateHasChanged();
     }
-    public void OnChange(object cityId)
+    public void SaveApartment()
+    {
+        Models.Apartment.AddNewStreet(new Models.Apartment(){Name=name,StreetId=(int)SelectedStreet});
+        GetFilteredItems();
+    }
+    public void OnCityChange(object cityId)
     {
         if (cityId is not null)
         {
@@ -72,13 +124,97 @@
         }
         districts = new List<Districts>();
     }
-
+    public void OnChange(object streetId)
+    {
+        if (SelectedStreet is not null)
+        {
+            apartmentsList = Models.Apartment.ApartmentList.Where(p => p.StreetId == (int)streetId).ToList();
+            foreach (var item in apartmentsList)
+            {
+                System.Console.WriteLine(item.Name);
+            }
+            return;
+        }
+        apartmentsList = new List<Models.Apartment>();
+    }
+    public void OnDistrictChange(object districtId)
+    {
+         if (SelectedCity is not null)
+        {
+            neighbourhoods = Neighbourhoods.NeighbourhoodsList.Where(p => p.IlceId ==(int)districtId).ToList();
+            return;
+        }
+        neighbourhoods = new List<Neighbourhoods>();
+    }
+     public void OnNeighbourChange(object neighbourId)
+    {
+         if ( SelectedNeighbour is not null)
+        {
+            streetList = Models.AvenueStreet.streetList.Where(p => p.MahalleId == (int)neighbourId).ToList();
+            return;
+        }
+        streetList = new List<Models.AvenueStreet>();
+    }
     public void GetFilteredItems()
     {
-        if (SelectedCity is not null && SelectedDistrict is not null)
+        if (SelectedStreet is not null)
         {
-            neighbourhoods = Neighbourhoods.NeighbourhoodsList.Where(p => p.IlId == SelectedCity && p.IlceId ==
-            SelectedDistrict).ToList();
+            apartmentsList = Models.Apartment.ApartmentList.Where(p => p.StreetId == SelectedStreet).ToList();
         }
     }
+    void Reset()
+    {
+        itemToInsert = null;
+        itemToUpdate = null;
+    }
+    async Task EditRow(Models.Apartment apartment)
+    {
+        itemToUpdate = apartment;
+        await itemsGrid.EditRow(apartment);
+    }
+    void OnUpdateRow(Models.Apartment apartment)
+    {
+        if (apartment == itemToInsert)
+        {
+            itemsGrid = null;
+        }
+        itemToUpdate = null;
+        Models.Apartment.UpdateName(apartment);
+    }
+    async Task SaveRow(Models.Apartment apartment)
+    {
+        await itemsGrid.UpdateRow(apartment);
+    }
+    void CancelEdit(Models.Apartment apartment)
+{
+if (apartment == itemToInsert)
+{
+itemToInsert = null;
+}
+itemToUpdate = null;
+itemsGrid.CancelEditRow(apartment);
+}
+    async Task DeleteRow(Models.Apartment apartment)
+{
+if (apartment == itemToInsert)
+{
+itemToInsert = null;
+}
+
+if (apartment == itemToUpdate)
+{
+itemToUpdate = null;
+}
+if (apartmentsList.Contains(apartment))
+{
+Models.Apartment.DeleteStreet(apartment);
+await itemsGrid.Reload();
+}
+else
+{
+itemsGrid.CancelEditRow(apartment);
+await itemsGrid.Reload();
+}
+GetFilteredItems();
+}
 }

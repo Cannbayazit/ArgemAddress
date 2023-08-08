@@ -1,10 +1,9 @@
 @page "/district"
 @layout MainLayout
-<div class="row px-5 py-2">
-    <div class="col-2 h-96 mt-2  background-blur b-rad-for-col border-for-inputs">
-        <div class="col-12 ">
+<div class="row px-5 py-2 h-100">
+    <div class="col-2  mt-2  background-blur b-rad-for-col border-for-inputs">
             <div class="navbar ">
-                <RadzenDropDown @bind-value=SelectedCity Change="@OnChange" AllowVirtualization="true" Data="cities"
+                <RadzenDropDown @bind-value=SelectedCity  AllowVirtualization="true" Data="cities"
                     TextProperty="Name" ValueProperty="Id" Placeholder="İl Seçiniz" TValue="int?"
                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                     FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
@@ -13,14 +12,58 @@
             <div class="d-flex justify-content-center align-items-center">
                 <button @onclick="GetFilteredItems" class="btn btn-border my-4 ">Listele</button>
             </div>
-        </div>
     </div>
     <div class="col-10  mt-2">
-        <div class="col-12 b-rad-for-col background-blur p-3 h-10  border-for-inputs">
-
+        <div class="col-12 b-rad-for-col background-blur p-3 h-25  border-for-inputs">
+             <form >
+                    <label class="d-flex justify-content-center mb-3">Yeni Kayıt Ekleme Alanı</label>
+                    <input @bind-value="name" class=" w-75 b-rad-for-label bg-light border-for-inputs" type="text">
+                    <button type="button" @onclick="SaveDistrict" class="btn btn-success">
+                       Ekle
+                    </button>
+                </form>
         </div>
-        <div class="col-12 mt-2 b-rad-for-col background-blur p-3 h-85 border-for-inputs">
+        <div class="col-12 mt-2 b-rad-for-col background-blur p-3 h-75 border-for-inputs">
             <div>
+                <RadzenDataGrid @ref="itemsGrid" AllowAlternatingRows="false" AllowPaging="true" PageSize="5"
+                        AllowSorting="true" EditMode="DataGridEditMode.Single" Data="@districtList"
+                        TItem="Districts" RowUpdate="@OnUpdateRow" ColumnWidth="200px">
+                        <EmptyTemplate>
+                            <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">Gösterilecek
+                                öğe bulunamadı</p>
+                        </EmptyTemplate>
+                        <Columns>
+                            <RadzenDataGridColumn TItem="Districts" Property="Name" Title="İlçe Adı"
+                                Width="200px">
+                                <EditTemplate Context="districts">
+                                    <RadzenTextBox @bind-Value="districts.Name" Style="width:100%; display: block" Name="İlçe Adı" />
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn Context="districts" TItem="Districts" Filterable="false" Sortable="false"
+                                TextAlign="TextAlign.Right" Width="156px">
+                                <Template>
+                                    <RadzenButton Click="@(args => EditRow(districts))" Icon="edit"
+                                        ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(districts))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </Template>
+                                <EditTemplate Context="districts">
+                                    <RadzenButton  Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Click="@((args) => SaveRow(districts))"
+                                        Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton Icon="close" Click="@((args) => CancelEdit(districts))" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat"
+                                        Size="ButtonSize.Medium" class="my-1 ms-1">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(districts))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                        </Columns>
+                    </RadzenDataGrid>
+                    @* @JsonConvert.SerializeObject(districtList) *@
 
             </div>
         </div>
@@ -28,11 +71,16 @@
 </div>
 
 @code {
+    string name;
+    Districts itemToInsert;
+    Districts itemToUpdate;
+    RadzenDataGrid<Districts> itemsGrid;
+
     List<Neighbourhoods> neighbourhoods = new List<Neighbourhoods>();
     int? SelectedCity;
     int? SelectedDistrict;
     List<Cities> cities = Cities.CityList;
-    List<Districts> districts = new List<Districts>();
+    List<Districts> districtList = new List<Districts>();
     public string searchTextStatus;
     void searchTextChanged(string text)
     {
@@ -45,18 +93,77 @@
     {
         if (cityId is not null)
         {
-            districts = Districts.DistrictList.Where(p => p.IlId == (int)cityId).ToList();
+            districtList = Districts.DistrictList.Where(p => p.IlId == (int)cityId).ToList();
             return;
         }
-        districts = new List<Districts>();
+        districtList = new List<Districts>();
     }
 
     public void GetFilteredItems()
     {
-        if (SelectedCity is not null && SelectedDistrict is not null)
+        if (SelectedCity is not null)
         {
-            neighbourhoods = Neighbourhoods.NeighbourhoodsList.Where(p => p.IlId == SelectedCity && p.IlceId ==
-            SelectedDistrict).ToList();
+            districtList = Districts.DistrictList.Where(p => p.IlId == SelectedCity ).ToList();
         }
     }
+    void Reset()
+    {
+        itemToInsert = null;
+        itemToUpdate = null;
+    }
+    public void SaveDistrict()
+    {
+        Districts.AddNewDistrict(new Districts(){IlId=(int)SelectedCity,Name=name});
+        GetFilteredItems();
+    }
+    async Task EditRow(Districts district)
+    {
+        itemToUpdate = district;
+        await itemsGrid.EditRow(district);
+    }
+    void OnUpdateRow(Districts district)
+    {
+        if (district == itemToInsert)
+        {
+            itemsGrid = null;
+        }
+        itemToUpdate = null;
+        Districts.UpdateName(district);
+    }
+    async Task SaveRow(Districts districts)
+    {
+        await itemsGrid.UpdateRow(districts);
+    }
+    void CancelEdit(Districts districts)
+{
+        if (districts == itemToInsert)
+        {
+        itemToInsert = null;
+        }
+        itemToUpdate = null;
+        itemsGrid.CancelEditRow(districts);
+        }
+        async Task DeleteRow(Districts districts)
+        {
+        if (districts == itemToInsert)
+        {
+        itemToInsert = null;
+        }
+
+        if (districts == itemToUpdate)
+        {
+        itemToUpdate = null;
+        }
+        if (districtList.Contains(districts))
+        {
+        Districts.DeleteDistricts(districts);
+        await itemsGrid.Reload();
+        }
+        else
+        {
+        itemsGrid.CancelEditRow(districts);
+        await itemsGrid.Reload();
+        }
+        GetFilteredItems();
+        }
 }

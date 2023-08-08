@@ -1,8 +1,7 @@
 @page "/neighbour"
 @layout MainLayout
-<div class="row  px-5 py-2">
+<div class="row h-100 px-5 py-2">
     <div class="col-2 background-blur b-rad-for-col border-for-inputs">
-        <div class="col-12">
             <div class="navbar ">
                 <RadzenDropDown @bind-value=SelectedCity Change="@OnChange" AllowVirtualization="true" Data="cities"
                     TextProperty="Name" ValueProperty="Id" Placeholder="İl Seçiniz" TValue="int?"
@@ -20,15 +19,16 @@
             <div class="d-flex justify-content-center align-items-center">
                 <button @onclick="GetFilteredItems" class="btn btn-border my-4 ">Listele</button>
             </div>
-        </div>
     </div>
     <div class="col-10">
         <div class="col-12 b-rad-for-col background-blur p-3 h-25 border-for-inputs">
-            <button class="btn btn-success mb-3">Yeni Kayıt</button>
             <div>
-                <form>
+                <form >
                     <label class="d-flex justify-content-center mb-3">Yeni Kayıt Ekleme Alanı</label>
-                    <input class="d-block w-100 b-rad-for-label bg-light border-for-inputs" type="text">
+                    <input @bind-value="name" class=" w-75 b-rad-for-label bg-light border-for-inputs" type="text">
+                    <button type="button" @onclick="SaveNeighbour" class="btn btn-success">
+                       Ekle
+                    </button>
                 </form>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 <form>
                     <label class="d-flex justify-content-center mb-3">Filtrelenen Kayıtların Listesi</label>
                     <RadzenDataGrid @ref="itemsGrid" AllowAlternatingRows="false" AllowPaging="true" PageSize="5"
-                        AllowSorting="true" EditMode="DataGridEditMode.Single" Data="@neighbourhoods"
+                        AllowSorting="true" AllowFiltering="true" FilterMode="FilterMode.Simple" EditMode="DataGridEditMode.Single" Data="@neighbourhoods"
                         TItem="Neighbourhoods" RowUpdate="@OnUpdateRow" ColumnWidth="200px">
                         <EmptyTemplate>
                             <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">Gösterilecek
@@ -74,7 +74,7 @@
                             </RadzenDataGridColumn>
                         </Columns>
                     </RadzenDataGrid>
-                    @JsonConvert.SerializeObject(neighbourhoods)
+                    @* @JsonConvert.SerializeObject(neighbourhoods) *@
                 </form>
             </div>
         </div>
@@ -87,9 +87,16 @@
     List<Neighbourhoods> neighbourhoods = new List<Neighbourhoods>();
     int? SelectedCity;
     int? SelectedDistrict;
+    string name;
     List<Cities> cities = Cities.CityList;
     List<Districts> districts = new List<Districts>();
     public string searchTextStatus;
+     
+     public void SaveNeighbour()
+     {
+        Neighbourhoods.AddNewNeighbourhood(new Neighbourhoods(){IlceId=(int)SelectedDistrict,IlId=(int)SelectedCity,Name=name});
+        GetFilteredItems();
+     }
     void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";

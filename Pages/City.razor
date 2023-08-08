@@ -5,25 +5,77 @@
 
     <div class="col-12">
         <div class="col-12 b-rad-for-col background-blur p-3 h-25 border-for-inputs">
-            <h6>Yeni Kayıt Ekleme Alanı</h6>
+             <form >
+                    <label class="d-flex justify-content-center mb-3">Yeni Kayıt Ekleme Alanı</label>
+                    <input @bind-value="name" class=" w-75 b-rad-for-label bg-light border-for-inputs" type="text">
+                    <button type="button" @onclick="SaveCity" class="btn btn-success">
+                       Ekle
+                    </button>
+                </form>
         </div>
         <div class="col-12 mt-2 b-rad-for-col background-blur p-3 h-75 border-for-inputs">
+            <div>
+                <form>
+                    <label class="d-flex justify-content-center mb-3">Filtrelenen Kayıtların Listesi</label>
+                    <RadzenDataGrid @ref="itemsGrid" AllowAlternatingRows="false" AllowPaging="true" PageSize="5"
+                        AllowSorting="true" EditMode="DataGridEditMode.Single" Data="@cityList"
+                        TItem="Cities" RowUpdate="@OnUpdateRow" ColumnWidth="200px">
+                        <EmptyTemplate>
+                            <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">Gösterilecek
+                                öğe bulunamadı</p>
+                        </EmptyTemplate>
+                        <Columns>
+                            <RadzenDataGridColumn TItem="Cities" Property="Name" Title="Şehir Adı"
+                                Width="200px">
+                                <EditTemplate Context="cities">
+                                    <RadzenTextBox @bind-Value="cities.Name" Style="width:100%; display: block" Name="Şehir Adı" />
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn Context="cities" TItem="Cities" Filterable="false" Sortable="false"
+                                TextAlign="TextAlign.Right" Width="156px">
+                                <Template>
+                                    <RadzenButton Click="@(args => EditRow(cities))" Icon="edit"
+                                        ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(cities))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </Template>
+                                <EditTemplate Context="cities">
+                                    <RadzenButton  Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Click="@((args) => SaveRow(cities))"
+                                        Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton Icon="close" Click="@((args) => CancelEdit(cities))" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat"
+                                        Size="ButtonSize.Medium" class="my-1 ms-1">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(cities))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                        </Columns>
+                    </RadzenDataGrid>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
 @code {
-    List<Neighbourhoods> neighbourhoods = new List<Neighbourhoods>();
-    int? SelectedCity;
-    int? SelectedDistrict;
-    List<Cities> cities = Cities.CityList;
+    string name;
+    Cities itemToInsert;
+    Cities itemToUpdate;
+    RadzenDataGrid<Cities> itemsGrid;
+    List<Cities> cityList = Cities.CityList;
     List<Districts> districts = new List<Districts>();
+    List<Neighbourhoods> neighbourhoods = new List<Neighbourhoods>();
+        
+   
+
     public string searchTextStatus;
     void searchTextChanged(string text)
     {
         searchTextStatus = $"Search text: {text}";
-
-
         StateHasChanged();
     }
     public void OnChange(object cityId)
@@ -35,13 +87,68 @@
         }
         districts = new List<Districts>();
     }
-
     public void GetFilteredItems()
     {
-        if (SelectedCity is not null && SelectedDistrict is not null)
-        {
-            neighbourhoods = Neighbourhoods.NeighbourhoodsList.Where(p => p.IlId == SelectedCity && p.IlceId ==
-            SelectedDistrict).ToList();
-        }
+        cityList = Cities.CityList.ToList();
     }
+     public void SaveCity()
+    {
+        Cities.AddNewCity(new Cities(){Name=name});
+        GetFilteredItems();
+    }
+     void Reset()
+    {
+        itemToInsert = null;
+        itemToUpdate = null;
+    }
+    async Task EditRow(Cities city)
+    {
+        itemToUpdate = city;
+        await itemsGrid.EditRow(city);
+    }
+    void OnUpdateRow(Cities city)
+    {
+        if (city == itemToInsert)
+        {
+            itemsGrid = null;
+        }
+        itemToUpdate = null;
+        Cities.UpdateName(city);
+    }
+    async Task SaveRow(Cities city)
+    {
+        await itemsGrid.UpdateRow(city);
+    }
+    void CancelEdit(Cities city)
+{
+        if (city == itemToInsert)
+        {
+        itemToInsert = null;
+        }
+        itemToUpdate = null;
+        itemsGrid.CancelEditRow(city);
+        }
+            async Task DeleteRow(Cities city)
+        {
+        if (city == itemToInsert)
+        {
+        itemToInsert = null;
+        }
+
+        if (city == itemToUpdate)
+        {
+        itemToUpdate = null;
+        }
+        if (cityList.Contains(city))
+        {
+        Cities.DeleteCities(city);
+        await itemsGrid.Reload();
+        }
+        else
+        {
+        itemsGrid.CancelEditRow(city);
+        await itemsGrid.Reload();
+        }
+        GetFilteredItems();
+        }
 }

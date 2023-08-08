@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace ArgemAddress.Models
 {
     public class Districts
@@ -22,5 +21,22 @@ namespace ArgemAddress.Models
             new Districts { IlId = 5, Id = 9, Name = "Osmangazi" },
             new Districts { IlId = 5, Id = 10, Name = "Nilüfer" },
         };
+        static public void UpdateName(Districts districts)
+        {
+            var result = DistrictList.FirstOrDefault(e => e.Id == districts.Id);
+            result.Name = districts.Name;
+        }
+        static public void DeleteDistricts(Districts districts)
+        {
+            DistrictList.Remove(districts);
+        }
+        static public void AddNewDistrict(Districts districts)
+        {
+            if (DistrictList.Any(p => p.Name == districts.Name) || String.IsNullOrEmpty(districts.Name))
+                return;
+            var lastItem = DistrictList.OrderBy(p => p.Id).Last();
+            districts.Id = lastItem.Id + 1;
+            DistrictList.Add(districts);
+        }
     }
 }

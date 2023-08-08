@@ -5,10 +5,12 @@
         border-top-right-radius: 16px;
         backdrop-filter: blur(10.9px);
         -webkit-backdrop-filter: blur(10.9px);
+        overflow-y: hidden;
+        overflow-x: hidden;
     }
 
     .p-20 {
-        padding-top: 120px;
+        padding-top: 70px;
     }
 </style>
 <div class="row g-0 h-100">
@@ -17,8 +19,10 @@
     </div>
     <div class="@(Minimize? "w-95" : "w-85") position-relative">
         <HeaderComponent></HeaderComponent>
-        <main class="w-100 h-100 p-20">
-            @Body
+        <main class="w-100 p-20 d-flex flex-column h-100">
+            <div class="flex-fill">
+                @Body
+            </div>
             <FooterComponent></FooterComponent>
         </main>
     </div>

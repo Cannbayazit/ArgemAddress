@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 namespace ArgemAddress.Models
 {
     public class Neighbourhoods
@@ -10,9 +9,7 @@ namespace ArgemAddress.Models
         public int IlId { get; set; }
         public int IlceId { get; set; }
         public int Id { get; set; }
-        public string Name { get; set; }
-
-
+        public string? Name { get; set; }
         public static List<Neighbourhoods> NeighbourhoodsList = new List<Neighbourhoods>(){
             new Neighbourhoods{IlId=1,IlceId=1,Id=1,Name="Mimar Sinan Mahallesi"},
             new Neighbourhoods{IlId=1,IlceId=1,Id=2,Name="Mağralı"},
@@ -39,11 +36,18 @@ namespace ArgemAddress.Models
         {
             var result = NeighbourhoodsList.FirstOrDefault(e => e.Id == neighbourhoods.Id);
             result.Name = neighbourhoods.Name;
-
         }
         static public void DeleteNeighbour(Neighbourhoods neighbourhoods)
         {
             NeighbourhoodsList.Remove(neighbourhoods);
+        }
+        static public void AddNewNeighbourhood(Neighbourhoods neighbourhoods)
+        {
+            if (NeighbourhoodsList.Any(p => p.Name == neighbourhoods.Name) || String.IsNullOrEmpty(neighbourhoods.Name))
+                return;
+            var lastItem = NeighbourhoodsList.OrderBy(p => p.Id).Last();
+            neighbourhoods.Id = lastItem.Id + 1;
+            NeighbourhoodsList.Add(neighbourhoods);
         }
     }
 }

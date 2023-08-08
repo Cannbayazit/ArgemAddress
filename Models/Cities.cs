@@ -19,5 +19,25 @@ namespace ArgemAddress.Models
             new Cities{Id=4,Name="İstanbul",TelCode=444},
             new Cities{Id=5,Name="Bursa",TelCode=544},
         };
+        static public void UpdateName(Cities cities)
+        {
+            var result = CityList.FirstOrDefault(e => e.Id == cities.Id);
+            result.Name = cities.Name;
+
+        }
+        static public void DeleteCities(Cities cities)
+        {
+            CityList.Remove(cities);
+        }
+        static public void AddNewCity(Cities cities)
+        {
+            if (CityList.Any(p => p.Name == cities.Name) || String.IsNullOrEmpty(cities.Name))
+                return;
+            var lastItem = CityList.OrderBy(p => p.Id).Last();
+            cities.Id = lastItem.Id + 1;
+            CityList.Add(cities);
+        }
     }
+
+
 }

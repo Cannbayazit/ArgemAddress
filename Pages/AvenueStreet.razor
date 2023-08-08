@@ -1,0 +1,200 @@
+@page "/street"
+@layout MainLayout
+
+<div class="row px-5 py-2">
+    <div class="col-2 h-96 mt-2  background-blur b-rad-for-col border-for-inputs">
+        <div class="col-12 ">
+            <div class="navbar ">
+                <RadzenDropDown @bind-value=SelectedCity Change="@OnChange" AllowVirtualization="true" Data="cities"
+                    TextProperty="Name" ValueProperty="Id" Placeholder="İl Seçiniz" TValue="int?"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
+                    Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
+            </div>
+            <div class="navbar ">
+                <RadzenDropDown @bind-value=SelectedDistrict Change="@OnDistrictChange" Disabled="!districts.Any()" Data="districts"
+                    TextProperty="Name" ValueProperty="Id" Placeholder="İlçe Seçiniz" TValue="int?"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
+                    Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
+            </div>
+            <div class="navbar ">
+                <RadzenDropDown @bind-value=SelectedNeighbour Disabled="!neighbourhoods.Any()" Data="neighbourhoods"
+                    TextProperty="Name" ValueProperty="Id" Placeholder="Mahalle Seçiniz" TValue="int?"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true" AllowClear="true"
+                    Style="width: 100%; max-width: 400px;" SearchTextChanged="@(args => searchTextChanged(args))" />
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <button @onclick="GetFilteredItems" class="btn btn-border my-4 ">Listele</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-10 mt-2">
+        <div class="col-12 b-rad-for-col background-blur p-3 h-10 border-for-inputs">
+                <form >
+                    <label class="d-flex justify-content-center mb-3">Yeni Kayıt Ekleme Alanı</label>
+                    <input @bind-value="name" class=" w-75 b-rad-for-label bg-light border-for-inputs" type="text">
+                    <button type="button" @onclick="SaveStreet" class="btn btn-success">
+                       Ekle
+                    </button>
+                </form>
+        </div>
+        <div class="col-12 mt-2 b-rad-for-col background-blur p-3 h-85 border-for-inputs">
+            <div>
+                <form>
+                    <label class="d-flex justify-content-center mb-3">Filtrelenen Kayıtların Listesi</label>
+                    <RadzenDataGrid @ref="itemsGrid" AllowAlternatingRows="false" AllowPaging="true" PageSize="5"
+                        AllowSorting="true" EditMode="DataGridEditMode.Single" Data="@avenueStreets"
+                        TItem="Models.AvenueStreet" RowUpdate="@OnUpdateRow" ColumnWidth="200px">
+                        <EmptyTemplate>
+                            <p style="color: lightgrey; font-size: 24px; text-align: center; margin: 2rem;">Gösterilecek
+                                öğe bulunamadı</p>
+                        </EmptyTemplate>
+                        <Columns>
+                            <RadzenDataGridColumn TItem="Models.AvenueStreet" Property="Name" Title="Cadde/Sokak Adı"
+                                Width="200px">
+                                <EditTemplate Context="streets">
+                                    <RadzenTextBox @bind-Value="streets.Name" Style="width:100%; display: block" Name="Maale Adı" />
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn Context="streets" TItem="Models.AvenueStreet" Filterable="false" Sortable="false"
+                                TextAlign="TextAlign.Right" Width="156px">
+                                <Template>
+                                    <RadzenButton Click="@(args => EditRow(streets))" Icon="edit"
+                                        ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat" Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(streets))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </Template>
+                                <EditTemplate Context="streets">
+                                    <RadzenButton  Icon="check" ButtonStyle="ButtonStyle.Success" Variant="Variant.Flat" Click="@((args) => SaveRow(streets))"
+                                        Size="ButtonSize.Medium">
+                                    </RadzenButton>
+                                    <RadzenButton Icon="close" Click="@((args) => CancelEdit(streets))" ButtonStyle="ButtonStyle.Light" Variant="Variant.Flat"
+                                        Size="ButtonSize.Medium" class="my-1 ms-1">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Variant="Variant.Flat"
+                                        Shade="Shade.Lighter" Size="ButtonSize.Medium" Click="@(args => DeleteRow(streets))" class="my-1 ms-1">
+                                    </RadzenButton>
+                                </EditTemplate>
+                            </RadzenDataGridColumn>
+                        </Columns>
+                    </RadzenDataGrid>
+                    @* @JsonConvert.SerializeObject(avenueStreets) *@
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    string name;
+     Models.AvenueStreet itemToInsert;
+    Models.AvenueStreet itemToUpdate;
+    RadzenDataGrid<Models.AvenueStreet> itemsGrid;
+    List<Neighbourhoods> neighbourhoods = new List<Neighbourhoods>();
+    List<Models.AvenueStreet> avenueStreets = new List<Models.AvenueStreet>();
+    int? SelectedCity;
+    int? SelectedDistrict;
+    int? SelectedNeighbour;
+    List<Cities> cities = Cities.CityList;
+    List<Districts> districts = new List<Districts>();
+    public string searchTextStatus;
+    void searchTextChanged(string text)
+    {
+        searchTextStatus = $"Search text: {text}";
+        StateHasChanged();
+    }
+    public void OnChange(object cityId)
+    {
+        if (cityId is not null)
+        {
+            districts = Districts.DistrictList.Where(p => p.IlId == (int)cityId).ToList();
+            return;
+        }
+        districts = new List<Districts>();
+    }
+    public void OnDistrictChange(object districtId)
+    {
+         if (SelectedCity is not null && SelectedDistrict is not null)
+        {
+            neighbourhoods = Neighbourhoods.NeighbourhoodsList.Where(p => p.IlId == SelectedCity && p.IlceId ==
+           (int)districtId).ToList();
+            return;
+        }
+        neighbourhoods = new List<Neighbourhoods>();
+    }
+
+    public void SaveStreet()
+    {
+        Models.AvenueStreet.AddNewStreet(new Models.AvenueStreet(){MahalleId=(int)SelectedNeighbour,Name=name});
+        GetFilteredItems();
+    }
+
+    public void GetFilteredItems()
+    {
+        if (SelectedNeighbour is not null)
+        {
+            avenueStreets = Models.AvenueStreet.streetList.Where(p => p.MahalleId == SelectedNeighbour).ToList();
+        }
+    }
+    void Reset()
+    {
+        itemToInsert = null;
+        itemToUpdate = null;
+    }
+    async Task EditRow(Models.AvenueStreet street)
+    {
+        itemToUpdate = street;
+        await itemsGrid.EditRow(street);
+    }
+    void OnUpdateRow(Models.AvenueStreet street)
+    {
+        if (street == itemToInsert)
+        {
+            itemsGrid = null;
+        }
+        itemToUpdate = null;
+        Models.AvenueStreet.UpdateName(street);
+
+    }
+
+    async Task SaveRow(Models.AvenueStreet street)
+    {
+        await itemsGrid.UpdateRow(street);
+    }
+    void CancelEdit(Models.AvenueStreet street)
+{
+if (street == itemToInsert)
+{
+itemToInsert = null;
+}
+itemToUpdate = null;
+itemsGrid.CancelEditRow(street);
+}
+    async Task DeleteRow(Models.AvenueStreet street)
+{
+if (street == itemToInsert)
+{
+itemToInsert = null;
+}
+
+if (street == itemToUpdate)
+{
+itemToUpdate = null;
+}
+if (avenueStreets.Contains(street))
+{
+Models.AvenueStreet.DeleteStreet(street);
+await itemsGrid.Reload();
+}
+else
+{
+itemsGrid.CancelEditRow(street);
+await itemsGrid.Reload();
+}
+GetFilteredItems();
+}
+}
